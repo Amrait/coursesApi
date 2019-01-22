@@ -12,20 +12,62 @@ namespace CoursesApi.Models
 
         public Address(Guid addressId)
         {
-            base.Id = addressId;
+            base.id = addressId;
         }
 
-        private int AddressType;
-        private string StreetLine1;
-        private string StreetLine2;
-        private string City;
-        private string State;
-        private string PostalCode;
-        private string Country;
+        public int AddressType { get; set; }
+        public string StreetLine1 { get => StreetLine1; set
+            {
+                if (!String.IsNullOrWhiteSpace(value))
+                {
+                    this.StreetLine1 = value;
+                }
+            }
+        }
+        public string StreetLine2 { get => StreetLine2; set
+            {
+                if (!String.IsNullOrWhiteSpace(value))
+                {
+                    this.StreetLine2 = value;
+                }
+            }
+        }
+        public string City { get => City; set
+            {
+                if (!String.IsNullOrWhiteSpace(value))
+                {
+                    this.City = value;
+                }
+            }
+        }
+        public string State { get => State; set
+            {
+                if (!String.IsNullOrWhiteSpace(value))
+                {
+                    this.State = value;
+                }
+            }
+        }
+        public string PostalCode { get => PostalCode; set
+            {
+                if (!String.IsNullOrWhiteSpace(value))
+                {
+                    this.PostalCode = value;
+                }
+            }
+        }
+        public string Country { get => Country; set
+            {
+                if (!String.IsNullOrWhiteSpace(value))
+                {
+                    this.Country = value;
+                }
+            }
+        }
 
         public override void DisplayEntityInfo()
         {
-            Console.WriteLine($"Address Id - {base.Id}, country - {GetCountry()}, city - {GetCity()}");
+            Console.WriteLine($"Address Id - {base.id}, country - {Country}, city - {City}");
         }
 
         public new bool Validate()
@@ -38,101 +80,5 @@ namespace CoursesApi.Models
                     String.IsNullOrWhiteSpace(StreetLine1) &&
                     String.IsNullOrWhiteSpace(StreetLine2));
         }
-
-        #region Getters / Setters
-        public int GetAddressType()
-        {
-            return this.AddressType;
-        }
-        public void SetAddressType(int addressType)
-        {
-            this.AddressType = addressType;
-        }
-
-        public string GetStreetLine1()
-        {
-            return this.StreetLine1;
-        }
-        public bool SetStreetLine1(string streetLine1)
-        {
-            if (!String.IsNullOrWhiteSpace(streetLine1))
-            {
-                this.StreetLine1 = streetLine1;
-                return true;
-            }
-            else return false;
-        }
-
-        public string GetStreetLine2()
-        {
-            return this.StreetLine2;
-        }
-        public bool SetStreetLine2(string streetLine2)
-        {
-            if (!String.IsNullOrWhiteSpace(streetLine2))
-            {
-                this.StreetLine2 = streetLine2;
-                return true;
-            }
-            else return false;
-        }
-
-        public string GetCity()
-        {
-            return this.City;
-        }
-        public bool SetCity(string city)
-        {
-            if (!String.IsNullOrWhiteSpace(city))
-            {
-                this.City = city;
-                return true;
-            }
-            else return false;
-        }
-
-        public string GetState()
-        {
-            return this.State;
-        }
-        public bool SetState(string state)
-        {
-            if (!String.IsNullOrWhiteSpace(state))
-            {
-                this.State = state;
-                return true;
-            }
-            else return false;
-        }
-
-        public string GetPostalCode()
-        {
-            return this.PostalCode;
-        }
-        public bool SetPostalCode(string postalCode)
-        {
-            if (!String.IsNullOrWhiteSpace(postalCode))
-            {
-                this.PostalCode = postalCode;
-                return true;
-            }
-            else return false;
-        }
-
-        public string GetCountry()
-        {
-            return this.Country;
-        }
-        public bool SetCountry(string country)
-        {
-            if (!String.IsNullOrWhiteSpace(country))
-            {
-                this.Country = country;
-                return true;
-            }
-            else return false;
-        }
-
-        #endregion
     }
 }

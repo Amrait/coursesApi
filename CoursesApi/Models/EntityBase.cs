@@ -8,15 +8,15 @@ namespace CoursesApi.Models
 {
     public class EntityBase
     {
-        public Guid Id;
-        public string Name;
+        public Guid id;
+        public string name;
         public virtual void DisplayEntityInfo()
         {
-            Console.WriteLine($"Id - {this.Id}, name - {this.Name}");
+            Console.WriteLine($"Id - {this.id}, name - {this.name}");
         }
         public bool Validate()
         {
-            return string.IsNullOrWhiteSpace(this.Name);
+            return string.IsNullOrWhiteSpace(this.name);
         }
     }
 }

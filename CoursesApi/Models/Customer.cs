@@ -12,82 +12,52 @@ namespace CoursesApi.Models
 
         public Customer(Guid customerId, string name)
         {
-            base.Id = customerId;
-            base.Name = name;
+            base.id = customerId;
+            base.name = name;
             this.AddressList = new List<Address>();
         }
 
-        private List<Address> AddressList;
-        private int CustomerType;
-        public static int InstanceCount;
-        private string LastName;
-        private string EmailAddress;
+        public List<Address> AddressList
+        {
+            get => AddressList;
+            protected set
+            {
+                if (value != null)
+                {
+                    this.AddressList = value;
+                }
+            }
+        }
+        public int CustomerType { get; set; }
+        public static int InstanceCount { get; private set; }
+        public string LastName { get => LastName; set
+            {
+                if (!String.IsNullOrWhiteSpace(value))
+                {
+                    this.LastName = value;
+                }
+            }
+        }
+        public string EmailAddress
+        {
+            get => EmailAddress;
+            set
+            {
+                if (!String.IsNullOrWhiteSpace(value))
+                {
+                    this.EmailAddress = value;
+                }
+            }
+        }
 
         public override void DisplayEntityInfo()
         {
-            Console.WriteLine($"Customer Id - {base.Id}, first name - {base.Name}, last name - {this.LastName}");
+            Console.WriteLine($"Customer Id - {base.id}, first name - {base.name}, last name - {this.LastName}");
         }
         
         public new bool Validate()
         {
             return (String.IsNullOrWhiteSpace(LastName) && String.IsNullOrWhiteSpace(EmailAddress));
         }
-
-        #region Getters / Setters
-        public List<Address> GetAddresses()
-        {
-            return this.AddressList;
-        }
-
-        public bool AddAddress(Address address)
-        {
-            if (address.Validate())
-            {
-                AddressList.Add(address);
-                return true;
-            }
-            else return false;
-        }
-
-        public int GetCustomerType()
-        {
-            return this.CustomerType;
-        }
-
-        public void SetCustomerType(int customerType)
-        {
-            this.CustomerType = customerType;
-        }
-
-        public string GetLastName()
-        {
-            return this.LastName;
-        }
-
-        public bool SetLastName(string lastName)
-        {
-            if (!String.IsNullOrWhiteSpace(lastName))
-            {
-                this.LastName = lastName;
-                return true;
-            }
-            else return false;
-        }
-
-        public string GetEmailAddress()
-        {
-            return this.EmailAddress;
-        }
-
-        public bool SetEmailAddress(string emailAddress)
-        {
-            if (!String.IsNullOrWhiteSpace(emailAddress))
-            {
-                this.EmailAddress = emailAddress;
-                return true;
-            }
-            else return false;
-        }
-        #endregion
     }
 }
