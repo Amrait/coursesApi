@@ -29,5 +29,33 @@ namespace CoursesApi.Models
             this.OrderDate = orderDate;
             this.ShippingAddress = shippingAddress;
         }
+
+        public override void DisplayEntityInfo()
+        {
+            Console.WriteLine($"Order Id - {base.id}, order name - {base.name}, " +
+                $"order customer - {Customer.LastName}, order date - {OrderDate.ToShortDateString()}");
+        }
+
+        public new bool Validate()
+        {
+            bool isValid = true;
+            if (Customer == null)
+            {
+                isValid = false;
+            }
+            if (OrderDate == null)
+            {
+                isValid = false;
+            }
+            if (ShippingAddress == null)
+            {
+                isValid = false;
+            }
+            if (OrderItems.Count == 0)
+            {
+                isValid = false;
+            }
+            return isValid;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CoursesApi.Models;
+using CoursesApi.Repositories;
 using System;
 
 namespace CoursesApi
@@ -12,10 +13,11 @@ namespace CoursesApi
             address1.City = "Poltava";
             address1.Country  = "Ukraine";
             var customer1 = new Customer(Guid.NewGuid(), "Andrii");
-            customer1.SetLastName("Kononenko");
+            customer1.LastName = "Kononenko";
             // Displaying info
             address1.DisplayEntityInfo();
             customer1.DisplayEntityInfo();
+
             Console.ReadLine();
         }
     }
