@@ -14,6 +14,13 @@ namespace CoursesApi.Repositories
         }
 
         private Dictionary<Guid, Customer> repository;
+
+        /// <summary>
+        /// Adds a customer to the repository. In case customer malformed or is already present,
+        /// won't add it.
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns>Success or failure of the operation</returns>
         public bool Add(Customer customer)
         {
             bool success = true;
@@ -39,6 +46,11 @@ namespace CoursesApi.Repositories
             return success;
         }
 
+        /// <summary>
+        /// Deletes by id if entry is present in the repository.
+        /// </summary>
+        /// <param name="id">ID of the entry to delete</param>
+        /// <returns>Success or failure of the operation</returns>
         public bool Delete(Guid id)
         {
             bool success = true;
@@ -56,21 +68,27 @@ namespace CoursesApi.Repositories
             return success;
         }
 
-        public bool Update(Customer customer)
+        /// <summary>
+        /// Updates an entry with specified ID by passed value.
+        /// </summary>
+        /// <param name="id">ID of the entry to update</param>
+        /// <param name="customer">Value to update an entry with</param>
+        /// <returns>Success or failure of the operation</returns>
+        public bool Update(Guid id, Customer customer)
         {
             bool success = true;
             var logger = new Logger();
             if (customer.Validate())
             {
-                if (repository.ContainsKey(customer.id))
+                if (repository.ContainsKey(id))
                 {
-                    repository[customer.id] = customer;
-                    logger.LogInfo("Customer with id {} was successfully updated.");
+                    repository[id] = customer;
+                    logger.LogInfo("Customer with id {} was successfully updated.", customer.id);
                     success = true;
                 }
                 else
                 {
-                    logger.LogError("Customer with id {} is not present in the repository.");
+                    logger.LogError("Customer with id {} is not present in the repository.", id);
                     success = false;
                 }
             }
@@ -80,6 +98,16 @@ namespace CoursesApi.Repositories
                 success = false;
             }
             return success;
+        }
+
+        public Customer GetById(Guid id)
+        {
+            Customer result = null;
+            if (repository.ContainsKey(id))
+            {
+                result = repository[id];
+            }
+            return result;
         }
 
         public List<Customer> GetAll()
