@@ -16,65 +16,78 @@ namespace CoursesApi.Models
         }
 
         #region backing fields
-        private string _streetLine1;
-        private string _streetLine2;
-        private string _city;
-        private string _state;
-        private string _postalCode;
-        private string _country;
+        private string streetLine1;
+        private string streetLine2;
+        private string city;
+        private string state;
+        private string postalCode;
+        private string country;
         #endregion
 
-
         public int AddressType { get; set; }
-        public string StreetLine1 { get => StreetLine1; set
-            {
-                if (!String.IsNullOrWhiteSpace(value))
-                {
-                    _streetLine1 = value;
-                }
-            }
-        }
-        public string StreetLine2 { get => StreetLine2;
+        public string StreetLine1
+        {
+            get => streetLine1;
             set
             {
                 if (!String.IsNullOrWhiteSpace(value))
                 {
-                    _streetLine2 = value;
+                    streetLine1 = value;
+                }
+            }
+        }
+        public string StreetLine2
+        {
+            get => streetLine2;
+            set
+            {
+                if (!String.IsNullOrWhiteSpace(value))
+                {
+                    streetLine2 = value;
                 }
             }
         }
         public string City
-        { get => City;
+        {
+            get => city;
             set
             {
                 if (!String.IsNullOrWhiteSpace(value))
                 {
-                    _city = value;
+                    city = value;
                 }
             }
         }
-        public string State { get => State; set
-            {
-                if (!String.IsNullOrWhiteSpace(value))
-                {
-                    _state = value;
-                }
-            }
-        }
-        public string PostalCode { get => PostalCode; set
-            {
-                if (!String.IsNullOrWhiteSpace(value))
-                {
-                    _postalCode = value;
-                }
-            }
-        }
-        public string Country { get => Country;
+        public string State
+        {
+            get => state;
             set
             {
                 if (!String.IsNullOrWhiteSpace(value))
                 {
-                    _country = value;
+                    state = value;
+                }
+            }
+        }
+        public string PostalCode
+        {
+            get => postalCode;
+            set
+            {
+                if (!String.IsNullOrWhiteSpace(value))
+                {
+                    postalCode = value;
+                }
+            }
+        }
+        public string Country
+        {
+            get => country;
+            set
+            {
+                if (!String.IsNullOrWhiteSpace(value))
+                {
+                    country = value;
                 }
             }
         }

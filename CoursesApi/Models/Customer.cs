@@ -16,36 +16,45 @@ namespace CoursesApi.Models
             base.name = name;
             this.AddressList = new List<Address>();
         }
+        #region Backing fields
+        private List<Address> addressList;
+        private int customerType;
+        private string lastName;
+        private string emailAddress;
+        #endregion
 
         public List<Address> AddressList
         {
-            get => AddressList;
+            get => addressList;
             protected set
             {
                 if (value != null)
                 {
-                    this.AddressList = value;
+                    addressList = value;
                 }
             }
         }
         public int CustomerType { get; set; }
         public static int InstanceCount { get; private set; }
-        public string LastName { get => LastName; set
+        public string LastName
+        {
+            get => lastName;
+            set
             {
                 if (!String.IsNullOrWhiteSpace(value))
                 {
-                    this.LastName = value;
+                    lastName = value;
                 }
             }
         }
         public string EmailAddress
         {
-            get => EmailAddress;
+            get => emailAddress;
             set
             {
                 if (!String.IsNullOrWhiteSpace(value))
                 {
-                    this.EmailAddress = value;
+                    emailAddress = value;
                 }
             }
         }
