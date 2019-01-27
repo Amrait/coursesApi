@@ -6,41 +6,41 @@ using System.Text;
 
 namespace CoursesApi.Repositories
 {
-    public class AddressRepository
+    public class OrderItemRepository
     {
-        public AddressRepository()
+        public OrderItemRepository()
         {
-            this.repository = new Dictionary<Guid, Address>();
+            this.repository = new Dictionary<Guid, OrderItem>();
         }
 
-        private Dictionary<Guid, Address> repository;
+        private Dictionary<Guid, OrderItem> repository;
 
         /// <summary>
-        /// Adds specified address to the backing repository. If address is already
+        /// Adds specified order item to the backing repository. If order item is already
         /// present or malformed, won't add it.
         /// </summary>
-        /// <param name="address">Address to add</param>
+        /// <param name="orderItem">Order to add</param>
         /// <returns>Success or failure of the operation</returns>
-        public bool Add(Address address)
+        public bool Add(OrderItem orderItem)
         {
             bool success = true;
             var logger = new Logger();
-            if (address.Validate())
+            if (orderItem.Validate())
             {
-                if (!repository.ContainsKey(address.id))
+                if (!repository.ContainsKey(orderItem.id))
                 {
-                    repository.Add(address.id, address);
-                    logger.LogInfo("Address with id {} was successfully added.", address.id);
+                    repository.Add(orderItem.id, orderItem);
+                    logger.LogInfo("Order item with id {} was successfully added.", orderItem.id);
                 }
                 else
                 {
-                    logger.LogError("Address with id {} is already in the repository.", address.id);
+                    logger.LogError("Order item with id {} is already in the repository.", orderItem.id);
                     success = false;
                 }
             }
             else
             {
-                logger.LogError("Address is malformed");
+                logger.LogError("Order item is malformed");
                 success = false;
             }
             return success;
@@ -58,11 +58,11 @@ namespace CoursesApi.Repositories
             if (repository.ContainsKey(id))
             {
                 repository.Remove(id);
-                logger.LogInfo("Address with id - {} was successfully removed", id);
+                logger.LogInfo("Order item with id - {} was successfully removed", id);
             }
             else
             {
-                logger.LogError("Address with id - {} is not present in the repository.");
+                logger.LogError("Order item with id - {} is not present in the repository.");
                 success = false;
             }
             return success;
@@ -72,28 +72,28 @@ namespace CoursesApi.Repositories
         /// Updates the entry found by specified ID
         /// </summary>
         /// <param name="id">ID of the entry</param>
-        /// <param name="address">Value to update with</param>
+        /// <param name="orderItem">Value to update with</param>
         /// <returns>Success or failure of the operation</returns>
-        public bool Update(Guid id, Address address)
+        public bool Update(Guid id, OrderItem orderItem)
         {
             bool success = true;
             var logger = new Logger();
-            if (address.Validate())
+            if (orderItem.Validate())
             {
                 if (repository.ContainsKey(id))
                 {
-                    repository[id] = address;
-                    logger.LogInfo("Address with id - {} was successfully updated", address.id);
+                    repository[id] = orderItem;
+                    logger.LogInfo("Order item with id - {} was successfully updated", orderItem.id);
                 }
                 else
                 {
-                    logger.LogError("Address with id - {} is not present in the repository.");
+                    logger.LogError("Order item with id - {} is not present in the repository.", id);
                     success = false;
                 }
             }
             else
             {
-                logger.LogError("Address is malformed.");
+                logger.LogError("Order item is malformed.");
                 success = false;
             }
             return success;
@@ -104,14 +104,14 @@ namespace CoursesApi.Repositories
         /// </summary>
         /// <param name="id">ID of the desired entry</param>
         /// <returns>Entry</returns>
-        public Address GetById(Guid id)
+        public OrderItem GetById(Guid id)
         {
-            Address result = null;
+            OrderItem result = null;
             var logger = new Logger();
             if (repository.ContainsKey(id))
             {
                 result = repository[id];
-                logger.LogInfo("Address with id - {} was successfully found.", id);
+                logger.LogInfo("Order item with id - {} was successfully found.", id);
             }
             return result;
         }
@@ -120,10 +120,9 @@ namespace CoursesApi.Repositories
         /// Gets the list of all entries.
         /// </summary>
         /// <returns>List of entries</returns>
-        public List<Address> GetAll()
+        public List<OrderItem> GetAll()
         {
-            return new List<Address>(repository.Values);
+            return new List<OrderItem>(repository.Values);
         }
     }
-    
 }

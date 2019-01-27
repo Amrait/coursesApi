@@ -6,41 +6,41 @@ using System.Text;
 
 namespace CoursesApi.Repositories
 {
-    public class AddressRepository
+    public class ProductRepository
     {
-        public AddressRepository()
+        public ProductRepository()
         {
-            this.repository = new Dictionary<Guid, Address>();
+            this.repository = new Dictionary<Guid, Product>();
         }
 
-        private Dictionary<Guid, Address> repository;
+        private Dictionary<Guid, Product> repository;
 
         /// <summary>
-        /// Adds specified address to the backing repository. If address is already
+        /// Adds specified product to the backing repository. If product is already
         /// present or malformed, won't add it.
         /// </summary>
-        /// <param name="address">Address to add</param>
+        /// <param name="product">Product to add</param>
         /// <returns>Success or failure of the operation</returns>
-        public bool Add(Address address)
+        public bool Add(Product product)
         {
             bool success = true;
             var logger = new Logger();
-            if (address.Validate())
+            if (product.Validate())
             {
-                if (!repository.ContainsKey(address.id))
+                if (!repository.ContainsKey(product.id))
                 {
-                    repository.Add(address.id, address);
-                    logger.LogInfo("Address with id {} was successfully added.", address.id);
+                    repository.Add(product.id, product);
+                    logger.LogInfo("Product with id {} was successfully added.", product.id);
                 }
                 else
                 {
-                    logger.LogError("Address with id {} is already in the repository.", address.id);
+                    logger.LogError("Product with id {} is already in the repository.", product.id);
                     success = false;
                 }
             }
             else
             {
-                logger.LogError("Address is malformed");
+                logger.LogError("Product is malformed");
                 success = false;
             }
             return success;
@@ -58,11 +58,11 @@ namespace CoursesApi.Repositories
             if (repository.ContainsKey(id))
             {
                 repository.Remove(id);
-                logger.LogInfo("Address with id - {} was successfully removed", id);
+                logger.LogInfo("Product with id - {} was successfully removed", id);
             }
             else
             {
-                logger.LogError("Address with id - {} is not present in the repository.");
+                logger.LogError("Product with id - {} is not present in the repository.");
                 success = false;
             }
             return success;
@@ -72,28 +72,28 @@ namespace CoursesApi.Repositories
         /// Updates the entry found by specified ID
         /// </summary>
         /// <param name="id">ID of the entry</param>
-        /// <param name="address">Value to update with</param>
+        /// <param name="product">Value to update with</param>
         /// <returns>Success or failure of the operation</returns>
-        public bool Update(Guid id, Address address)
+        public bool Update(Guid id, Product product)
         {
             bool success = true;
             var logger = new Logger();
-            if (address.Validate())
+            if (product.Validate())
             {
                 if (repository.ContainsKey(id))
                 {
-                    repository[id] = address;
-                    logger.LogInfo("Address with id - {} was successfully updated", address.id);
+                    repository[id] = product;
+                    logger.LogInfo("Product with id - {} was successfully updated", product.id);
                 }
                 else
                 {
-                    logger.LogError("Address with id - {} is not present in the repository.");
+                    logger.LogError("Product with id - {} is not present in the repository.", id);
                     success = false;
                 }
             }
             else
             {
-                logger.LogError("Address is malformed.");
+                logger.LogError("Product is malformed.");
                 success = false;
             }
             return success;
@@ -104,14 +104,14 @@ namespace CoursesApi.Repositories
         /// </summary>
         /// <param name="id">ID of the desired entry</param>
         /// <returns>Entry</returns>
-        public Address GetById(Guid id)
+        public Product GetById(Guid id)
         {
-            Address result = null;
+            Product result = null;
             var logger = new Logger();
             if (repository.ContainsKey(id))
             {
                 result = repository[id];
-                logger.LogInfo("Address with id - {} was successfully found.", id);
+                logger.LogInfo("Product with id - {} was successfully found.", id);
             }
             return result;
         }
@@ -120,10 +120,9 @@ namespace CoursesApi.Repositories
         /// Gets the list of all entries.
         /// </summary>
         /// <returns>List of entries</returns>
-        public List<Address> GetAll()
+        public List<Product> GetAll()
         {
-            return new List<Address>(repository.Values);
+            return new List<Product>(repository.Values);
         }
     }
-    
 }

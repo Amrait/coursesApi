@@ -100,16 +100,27 @@ namespace CoursesApi.Repositories
             return success;
         }
 
+        /// <summary>
+        /// Get's an entry by id from the backing repository.
+        /// </summary>
+        /// <param name="id">ID of the desired entry</param>
+        /// <returns>Entry</returns>
         public Customer GetById(Guid id)
         {
             Customer result = null;
+            var logger = new Logger();
             if (repository.ContainsKey(id))
             {
                 result = repository[id];
+                logger.LogInfo("Address with id - {} was successfully found.", id);
             }
             return result;
         }
 
+        /// <summary>
+        /// Gets the list of all entries.
+        /// </summary>
+        /// <returns>List of entries</returns>
         public List<Customer> GetAll()
         {
             return new List<Customer>(repository.Values);
