@@ -18,6 +18,9 @@ namespace CoursesApi
             address1.DisplayEntityInfo();
             customer1.DisplayEntityInfo();
 
+            CustomerRepository customerRepository = new CustomerRepository();
+            customerRepository.Add(customer1);
+
             Console.ReadLine();
         }
     }

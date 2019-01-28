@@ -1,14 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.IO;
 
 namespace CoursesApi.Common.Utilities
 {
     public class Logger
     {
         public Logger()
-        {}
+        {
+            writer = File.AppendText("log.txt");
+        }
 
+        private StreamWriter writer;
         // To be implemented
         public Logger(string logFilePath)
         {
@@ -17,12 +19,14 @@ namespace CoursesApi.Common.Utilities
 
         public void LogInfo(String message, params object[] args)
         {
-            Console.WriteLine($"{DateTime.UtcNow} - INFO: {String.Format(message, args)}");
+            writer.Write($"{DateTime.UtcNow} - INFO: {String.Format(message, args)}");
+            writer.Close();
         }
 
         public void LogError(String message, params object[] args)
         {
-            Console.WriteLine($"{DateTime.UtcNow} - ERROR: {String.Format(message, args)}");
+            writer.Write($"{DateTime.UtcNow} - ERROR: {String.Format(message, args)}");
+            writer.Close();
         }
     }
 }
