@@ -40,7 +40,7 @@ namespace CoursesApi.Models
             Console.WriteLine($"Product Id - {base.id}, product name - {this.ProductName}");
         }
 
-        public new bool Validate()
+        public override bool Validate()
         {
             // Once logger is here, this will be logged properly
             bool isValid = true;

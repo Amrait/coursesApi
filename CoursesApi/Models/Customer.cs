@@ -13,12 +13,13 @@ namespace CoursesApi.Models
         public Customer(Guid customerId, string name)
         {
             base.id = customerId;
-            base.name = name;
+            this.FirstName = name;
             this.AddressList = new List<Address>();
         }
         #region Backing fields
         private List<Address> addressList;
         private int customerType;
+        private string firstName;
         private string lastName;
         private string emailAddress;
         #endregion
@@ -36,6 +37,17 @@ namespace CoursesApi.Models
         }
         public int CustomerType { get; set; }
         public static int InstanceCount { get; private set; }
+        public string FirstName
+        {
+            get => firstName;
+            set
+            {
+                if (!String.IsNullOrWhiteSpace(value))
+                {
+                    firstName = value;
+                }
+            }
+        }
         public string LastName
         {
             get => lastName;
@@ -61,10 +73,10 @@ namespace CoursesApi.Models
 
         public override void DisplayEntityInfo()
         {
-            Console.WriteLine($"Customer Id - {base.id}, first name - {base.name}, last name - {this.LastName}");
+            Console.WriteLine($"Customer Id - {base.id}, first name - {this.FirstName}, last name - {this.LastName}");
         }
         
-        public new bool Validate()
+        public override bool Validate()
         {
             return (String.IsNullOrWhiteSpace(LastName) && String.IsNullOrWhiteSpace(EmailAddress));
         }

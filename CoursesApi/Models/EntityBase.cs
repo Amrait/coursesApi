@@ -6,17 +6,13 @@ using System.Text;
 
 namespace CoursesApi.Models
 {
-    public class EntityBase
+    public abstract class EntityBase
     {
         public Guid id;
-        public string name;
         public virtual void DisplayEntityInfo()
         {
-            Console.WriteLine($"Id - {this.id}, name - {this.name}");
+            Console.WriteLine($"Id - {this.id}");
         }
-        public bool Validate()
-        {
-            return string.IsNullOrWhiteSpace(this.name);
-        }
+        public abstract bool Validate();
     }
 }
