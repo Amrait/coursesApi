@@ -6,50 +6,50 @@ using System.Text;
 
 namespace CoursesApi.Repositories
 {
-    public class CustomerRepository
+    public class OrderItemRepository
     {
-        public CustomerRepository()
+        public OrderItemRepository()
         {
-            this.repository = new Dictionary<Guid, Customer>();
+            this.repository = new Dictionary<Guid, OrderItem>();
         }
 
-        private Dictionary<Guid, Customer> repository;
+        private Dictionary<Guid, OrderItem> repository;
 
         /// <summary>
-        /// Adds a customer to the repository. In case customer malformed or is already present,
-        /// won't add it.
+        /// Adds specified order item to the backing repository. If order item is already
+        /// present or malformed, won't add it.
         /// </summary>
-        /// <param name="customer"></param>
+        /// <param name="orderItem">Order to add</param>
         /// <returns>Success or failure of the operation</returns>
-        public bool Add(Customer customer)
+        public bool Add(OrderItem orderItem)
         {
             bool success = true;
             var logger = new Logger();
-            if (customer.Validate())
+            if (orderItem.Validate())
             {
-                if (!repository.ContainsKey(customer.id))
+                if (!repository.ContainsKey(orderItem.id))
                 {
-                    repository.Add(customer.id, customer);
-                    logger.LogInfo("Customer with id {} was successfully added.", customer.id);
+                    repository.Add(orderItem.id, orderItem);
+                    logger.LogInfo("Order item with id {} was successfully added.", orderItem.id);
                 }
                 else
                 {
-                    logger.LogError("Customer with id {} is already in the repository.", customer.id);
+                    logger.LogError("Order item with id {} is already in the repository.", orderItem.id);
                     success = false;
                 }
             }
             else
             {
-                logger.LogInfo("Customer is malformed");
+                logger.LogError("Order item is malformed");
                 success = false;
             }
             return success;
         }
 
         /// <summary>
-        /// Deletes by id if entry is present in the repository.
+        /// Deletes the entry if it is present in the backing repository.
         /// </summary>
-        /// <param name="id">ID of the entry to delete</param>
+        /// <param name="id">ID of the entry</param>
         /// <returns>Success or failure of the operation</returns>
         public bool Delete(Guid id)
         {
@@ -58,43 +58,42 @@ namespace CoursesApi.Repositories
             if (repository.ContainsKey(id))
             {
                 repository.Remove(id);
-                logger.LogInfo("Customer with id {} was successfully removed from the repository.", id);
+                logger.LogInfo("Order item with id - {} was successfully removed", id);
             }
             else
             {
-                logger.LogError("Customer with id {} is not present in the repository.", id);
+                logger.LogError("Order item with id - {} is not present in the repository.");
                 success = false;
             }
             return success;
         }
 
         /// <summary>
-        /// Updates an entry with specified ID by passed value.
+        /// Updates the entry found by specified ID
         /// </summary>
-        /// <param name="id">ID of the entry to update</param>
-        /// <param name="customer">Value to update an entry with</param>
+        /// <param name="id">ID of the entry</param>
+        /// <param name="orderItem">Value to update with</param>
         /// <returns>Success or failure of the operation</returns>
-        public bool Update(Guid id, Customer customer)
+        public bool Update(Guid id, OrderItem orderItem)
         {
             bool success = true;
             var logger = new Logger();
-            if (customer.Validate())
+            if (orderItem.Validate())
             {
                 if (repository.ContainsKey(id))
                 {
-                    repository[id] = customer;
-                    logger.LogInfo("Customer with id {} was successfully updated.", customer.id);
-                    success = true;
+                    repository[id] = orderItem;
+                    logger.LogInfo("Order item with id - {} was successfully updated", orderItem.id);
                 }
                 else
                 {
-                    logger.LogError("Customer with id {} is not present in the repository.", id);
+                    logger.LogError("Order item with id - {} is not present in the repository.", id);
                     success = false;
                 }
             }
             else
             {
-                logger.LogError("Customer is malformed");
+                logger.LogError("Order item is malformed.");
                 success = false;
             }
             return success;
@@ -105,14 +104,14 @@ namespace CoursesApi.Repositories
         /// </summary>
         /// <param name="id">ID of the desired entry</param>
         /// <returns>Entry</returns>
-        public Customer GetById(Guid id)
+        public OrderItem GetById(Guid id)
         {
-            Customer result = null;
+            OrderItem result = null;
             var logger = new Logger();
             if (repository.ContainsKey(id))
             {
                 result = repository[id];
-                logger.LogInfo("Address with id - {} was successfully found.", id);
+                logger.LogInfo("Order item with id - {} was successfully found.", id);
             }
             return result;
         }
@@ -121,9 +120,9 @@ namespace CoursesApi.Repositories
         /// Gets the list of all entries.
         /// </summary>
         /// <returns>List of entries</returns>
-        public List<Customer> GetAll()
+        public List<OrderItem> GetAll()
         {
-            return new List<Customer>(repository.Values);
+            return new List<OrderItem>(repository.Values);
         }
     }
 }

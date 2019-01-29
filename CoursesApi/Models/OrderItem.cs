@@ -44,7 +44,7 @@ namespace CoursesApi.Models
                 $"product - {this.Product.ProductName}, quantity - {this.Quantity}");
         }
 
-        public new bool Validate()
+        public override bool Validate()
         {
             bool isValid = true;
             if (base.id == null)

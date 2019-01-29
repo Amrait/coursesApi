@@ -1,0 +1,19 @@
+{
+  "id": "5bee7b69-a817-42bf-90e3-f8328415b61a",
+  "AddressList": [
+    {
+      "id": "948036e3-d804-40c9-984f-3aa4d8106ee1",
+      "AddressType": 0,
+      "StreetLine1": null,
+      "StreetLine2": null,
+      "City": "Poltava",
+      "State": null,
+      "PostalCode": null,
+      "Country": "Ukraine"
+    }
+  ],
+  "CustomerType": 0,
+  "FirstName": "Andrii",
+  "LastName": "Kononenko",
+  "EmailAddress": null
+}

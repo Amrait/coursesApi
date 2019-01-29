@@ -6,50 +6,50 @@ using System.Text;
 
 namespace CoursesApi.Repositories
 {
-    public class CustomerRepository
+    public class ProductRepository
     {
-        public CustomerRepository()
+        public ProductRepository()
         {
-            this.repository = new Dictionary<Guid, Customer>();
+            this.repository = new Dictionary<Guid, Product>();
         }
 
-        private Dictionary<Guid, Customer> repository;
+        private Dictionary<Guid, Product> repository;
 
         /// <summary>
-        /// Adds a customer to the repository. In case customer malformed or is already present,
-        /// won't add it.
+        /// Adds specified product to the backing repository. If product is already
+        /// present or malformed, won't add it.
         /// </summary>
-        /// <param name="customer"></param>
+        /// <param name="product">Product to add</param>
         /// <returns>Success or failure of the operation</returns>
-        public bool Add(Customer customer)
+        public bool Add(Product product)
         {
             bool success = true;
             var logger = new Logger();
-            if (customer.Validate())
+            if (product.Validate())
             {
-                if (!repository.ContainsKey(customer.id))
+                if (!repository.ContainsKey(product.id))
                 {
-                    repository.Add(customer.id, customer);
-                    logger.LogInfo("Customer with id {} was successfully added.", customer.id);
+                    repository.Add(product.id, product);
+                    logger.LogInfo("Product with id {} was successfully added.", product.id);
                 }
                 else
                 {
-                    logger.LogError("Customer with id {} is already in the repository.", customer.id);
+                    logger.LogError("Product with id {} is already in the repository.", product.id);
                     success = false;
                 }
             }
             else
             {
-                logger.LogInfo("Customer is malformed");
+                logger.LogError("Product is malformed");
                 success = false;
             }
             return success;
         }
 
         /// <summary>
-        /// Deletes by id if entry is present in the repository.
+        /// Deletes the entry if it is present in the backing repository.
         /// </summary>
-        /// <param name="id">ID of the entry to delete</param>
+        /// <param name="id">ID of the entry</param>
         /// <returns>Success or failure of the operation</returns>
         public bool Delete(Guid id)
         {
@@ -58,43 +58,42 @@ namespace CoursesApi.Repositories
             if (repository.ContainsKey(id))
             {
                 repository.Remove(id);
-                logger.LogInfo("Customer with id {} was successfully removed from the repository.", id);
+                logger.LogInfo("Product with id - {} was successfully removed", id);
             }
             else
             {
-                logger.LogError("Customer with id {} is not present in the repository.", id);
+                logger.LogError("Product with id - {} is not present in the repository.");
                 success = false;
             }
             return success;
         }
 
         /// <summary>
-        /// Updates an entry with specified ID by passed value.
+        /// Updates the entry found by specified ID
         /// </summary>
-        /// <param name="id">ID of the entry to update</param>
-        /// <param name="customer">Value to update an entry with</param>
+        /// <param name="id">ID of the entry</param>
+        /// <param name="product">Value to update with</param>
         /// <returns>Success or failure of the operation</returns>
-        public bool Update(Guid id, Customer customer)
+        public bool Update(Guid id, Product product)
         {
             bool success = true;
             var logger = new Logger();
-            if (customer.Validate())
+            if (product.Validate())
             {
                 if (repository.ContainsKey(id))
                 {
-                    repository[id] = customer;
-                    logger.LogInfo("Customer with id {} was successfully updated.", customer.id);
-                    success = true;
+                    repository[id] = product;
+                    logger.LogInfo("Product with id - {} was successfully updated", product.id);
                 }
                 else
                 {
-                    logger.LogError("Customer with id {} is not present in the repository.", id);
+                    logger.LogError("Product with id - {} is not present in the repository.", id);
                     success = false;
                 }
             }
             else
             {
-                logger.LogError("Customer is malformed");
+                logger.LogError("Product is malformed.");
                 success = false;
             }
             return success;
@@ -105,14 +104,14 @@ namespace CoursesApi.Repositories
         /// </summary>
         /// <param name="id">ID of the desired entry</param>
         /// <returns>Entry</returns>
-        public Customer GetById(Guid id)
+        public Product GetById(Guid id)
         {
-            Customer result = null;
+            Product result = null;
             var logger = new Logger();
             if (repository.ContainsKey(id))
             {
                 result = repository[id];
-                logger.LogInfo("Address with id - {} was successfully found.", id);
+                logger.LogInfo("Product with id - {} was successfully found.", id);
             }
             return result;
         }
@@ -121,9 +120,9 @@ namespace CoursesApi.Repositories
         /// Gets the list of all entries.
         /// </summary>
         /// <returns>List of entries</returns>
-        public List<Customer> GetAll()
+        public List<Product> GetAll()
         {
-            return new List<Customer>(repository.Values);
+            return new List<Product>(repository.Values);
         }
     }
 }

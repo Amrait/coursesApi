@@ -97,7 +97,7 @@ namespace CoursesApi.Models
             Console.WriteLine($"Address Id - {base.id}, country - {Country}, city - {City}");
         }
 
-        public new bool Validate()
+        public override bool Validate()
         {
             // Once logger is available, these should be splitted to provide
             // informative messages about which fields are malformed
