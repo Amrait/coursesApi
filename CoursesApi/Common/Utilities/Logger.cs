@@ -10,22 +10,28 @@ namespace CoursesApi.Common.Utilities
             writer = File.AppendText("log.txt");
         }
 
-        private StreamWriter writer;
-        // To be implemented
-        public Logger(string logFilePath)
+        public Logger(string filePath)
         {
-            throw new NotImplementedException();
+            writer = File.AppendText(filePath);
         }
+
+        private StreamWriter writer;
 
         public void LogInfo(String message, params object[] args)
         {
-            writer.Write($"{DateTime.UtcNow} - INFO: {String.Format(message, args)}");
+            writer.WriteLine($"{DateTime.UtcNow} - INFO: {String.Format(message, args)}");
             writer.Close();
         }
 
         public void LogError(String message, params object[] args)
         {
-            writer.Write($"{DateTime.UtcNow} - ERROR: {String.Format(message, args)}");
+            writer.WriteLine($"{DateTime.UtcNow} - ERROR: {String.Format(message, args)}");
+            writer.Close();
+        }
+
+        public void LogJson(String json)
+        {
+            writer.WriteLine(json);
             writer.Close();
         }
     }

@@ -10,25 +10,26 @@ namespace CoursesApi.Repositories
     {
         public Repository()
         {
-            this.repository = new Dictionary<Guid, EntityBase>();
+            this.repository = new Dictionary<Guid, object>();
         }
 
-        private Dictionary<Guid, EntityBase> repository;
+        private Dictionary<Guid, object> repository;
 
-        public bool Add(EntityBase entry)
+        public bool Add(object entry)
         {
+            EntityBase castedEntry = entry as EntityBase;
             bool success = true;
             var logger = new Logger();
-            if (entry.Validate())
+            if (castedEntry.Validate())
             {
-                if (!repository.ContainsKey(entry.id))
+                if (!repository.ContainsKey(castedEntry.id))
                 {
-                    repository.Add(entry.id, entry);
-                    logger.LogInfo("Entry with id {} was successfully added.", entry.id);
+                    repository.Add(castedEntry.id, entry);
+                    logger.LogInfo("Entry with id {} was successfully added.", castedEntry.id);
                 }
                 else
                 {
-                    logger.LogError("Entry with id {} is already in the repository.", entry.id);
+                    logger.LogError("Entry with id {} is already in the repository.", castedEntry.id);
                     success = false;
                 }
             }
@@ -40,14 +41,14 @@ namespace CoursesApi.Repositories
             return success;
         }
 
-        public List<EntityBase> GetAll()
+        public List<object> GetAll()
         {
-            return new List<EntityBase>(repository.Values);
+            return new List<object>(repository.Values);
         }
 
-        public EntityBase GetById(Guid id)
+        public object GetById(Guid id)
         {
-            EntityBase result = null;
+            object result = null;
             var logger = new Logger();
             if (repository.ContainsKey(id))
             {
@@ -78,16 +79,17 @@ namespace CoursesApi.Repositories
             return success;
         }
 
-        public bool Update(Guid id, EntityBase entry)
+        public bool Update(Guid id, object entry)
         {
+            EntityBase castedEntry = entry as EntityBase;
             bool success = true;
             var logger = new Logger();
-            if (entry.Validate())
+            if (castedEntry.Validate())
             {
                 if (repository.ContainsKey(id))
                 {
                     repository[id] = entry;
-                    logger.LogInfo("Entry with id - {} was successfully updated", entry.id);
+                    logger.LogInfo("Entry with id - {} was successfully updated", castedEntry.id);
                 }
                 else
                 {

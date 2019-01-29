@@ -7,10 +7,10 @@ namespace CoursesApi.Repositories
 {
     public interface IRepository
     {
-        bool Add(EntityBase entry);
+        bool Add(Object entry);
         bool Remove(Guid id);
-        EntityBase GetById(Guid id);
-        bool Update(Guid id, EntityBase entry);
-        List<EntityBase> GetAll();
+        Object GetById(Guid id);
+        bool Update(Guid id, Object entry);
+        List<Object> GetAll();
     }
 }
