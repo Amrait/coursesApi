@@ -6,30 +6,29 @@ using CoursesApi.Models;
 
 namespace CoursesApi.Repositories
 {
-    public class Repository : IRepository
+    public class EntityRepository<T> : IRepository<T> where T : EntityBase
     {
-        public Repository()
+        public EntityRepository()
         {
-            this.repository = new Dictionary<Guid, object>();
+            this.repository = new Dictionary<Guid, T>();
         }
 
-        private Dictionary<Guid, object> repository;
+        private Dictionary<Guid, T> repository;
 
-        public bool Add(object entry)
+        public bool Add(T entry)
         {
-            EntityBase castedEntry = entry as EntityBase;
             bool success = true;
             var logger = new Logger();
-            if (castedEntry.Validate())
+            if (entry.Validate())
             {
-                if (!repository.ContainsKey(castedEntry.id))
+                if (!repository.ContainsKey(entry.id))
                 {
-                    repository.Add(castedEntry.id, entry);
-                    logger.LogInfo("Entry with id {} was successfully added.", castedEntry.id);
+                    repository.Add(entry.id, entry);
+                    logger.LogInfo("Entry with id {} was successfully added.", entry.id);
                 }
                 else
                 {
-                    logger.LogError("Entry with id {} is already in the repository.", castedEntry.id);
+                    logger.LogError("Entry with id {} is already in the repository.", entry.id);
                     success = false;
                 }
             }
@@ -41,14 +40,14 @@ namespace CoursesApi.Repositories
             return success;
         }
 
-        public List<object> GetAll()
+        public IEnumerable<T> GetAll()
         {
-            return new List<object>(repository.Values);
+            return repository.Values;
         }
 
-        public object GetById(Guid id)
+        public T GetById(Guid id)
         {
-            object result = null;
+            T result = default(T);
             var logger = new Logger();
             if (repository.ContainsKey(id))
             {
@@ -79,7 +78,7 @@ namespace CoursesApi.Repositories
             return success;
         }
 
-        public bool Update(Guid id, object entry)
+        public bool Update(Guid id, T entry)
         {
             EntityBase castedEntry = entry as EntityBase;
             bool success = true;

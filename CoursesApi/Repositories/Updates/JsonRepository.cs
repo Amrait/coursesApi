@@ -6,17 +6,46 @@ using System.Text;
 
 namespace CoursesApi.Repositories.Updates
 {
-    public class JsonRepository : Repository
+    public class JsonRepository<T> : IRepository<T>
     {
-        public string Serialize(object entry)
+        public JsonRepository(string logName)
         {
-            var logger = new Logger("result.json");
-            string json = JsonConvert.SerializeObject(entry, Formatting.Indented);
-            logger.LogJson(json);
-            return json;
+            this.logger = new Logger(logName);
         }
 
-        // Well, it make sense to DESERIALIZE, but there's no good point to do this
-        // without generics
+        private Logger logger;
+
+        public bool Add(T entry)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<T> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public T GetById(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+        
+        public bool Update(Guid id, T entry)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    class JsonCollection<T>
+    {
+        JsonCollection()
+        {
+        }
+        public Dictionary<string, T> content;
     }
 }

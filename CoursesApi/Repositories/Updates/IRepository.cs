@@ -5,12 +5,12 @@ using System.Text;
 
 namespace CoursesApi.Repositories
 {
-    public interface IRepository
+    public interface IRepository <T>
     {
-        bool Add(Object entry);
+        bool Add(T entry);
         bool Remove(Guid id);
-        Object GetById(Guid id);
-        bool Update(Guid id, Object entry);
-        List<Object> GetAll();
+        T GetById(Guid id);
+        bool Update(Guid id, T entry);
+        IEnumerable<T> GetAll();
     }
 }
