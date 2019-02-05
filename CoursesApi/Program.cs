@@ -17,18 +17,22 @@ namespace CoursesApi
             var customer1 = new Customer(Guid.NewGuid(), "Andrii");
             customer1.LastName = "Kononenko";
             customer1.AddressList.Add(address1);
+            customer1.EmailAddress = "email1@gmail.com";
 
             var customer2 = new Customer(Guid.NewGuid(), "Oleksii");
             customer2.LastName = "Kozak";
             customer2.AddressList.Add(address1);
+            customer2.EmailAddress = "email2@gmail.com";
 
             var customer3 = new Customer(Guid.NewGuid(), "Bruce");
             customer3.LastName = "Wayne";
             customer3.AddressList.Add(address1);
+            customer3.EmailAddress = "email3@gmail.com";
 
             var customer4 = new Customer(Guid.NewGuid(), "Ludwig");
             customer4.LastName = "Fresenburg";
             customer4.AddressList.Add(address1);
+            customer4.EmailAddress = "email4@gmail.com";
 
             var order1 = new Order(Guid.NewGuid(), "Andrii' order", customer1, DateTime.UtcNow.AddDays(-1), customer1.AddressList[0]);
             var order2 = new Order(Guid.NewGuid(), "Oleksii' order", customer2, DateTime.UtcNow.AddDays(-5), customer2.AddressList[0]);
@@ -36,10 +40,9 @@ namespace CoursesApi
             var order4 = new Order(Guid.NewGuid(), "Ludwig' order", customer4, DateTime.UtcNow.AddDays(-8), customer4.AddressList[0]);
 
 
-            JsonRepository customerRepository = new JsonRepository();
+            JsonRepository<Customer> customerRepository = new JsonRepository<Customer>("customer.log","customers.json");
             customerRepository.Add(customer1);
-            string res = customerRepository.Serialize(customer1);
-            Console.WriteLine(res);
+
             Console.ReadLine();
         }
     }

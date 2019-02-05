@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoursesApi.Common.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -78,7 +79,19 @@ namespace CoursesApi.Models
         
         public override bool Validate()
         {
-            return (String.IsNullOrWhiteSpace(LastName) && String.IsNullOrWhiteSpace(EmailAddress));
+            bool result = true;
+            var logger = new Logger();
+            if (String.IsNullOrWhiteSpace(LastName))
+            {
+                result = false;
+                logger.LogError("Last name is malformed");
+            }
+            if (String.IsNullOrWhiteSpace(EmailAddress))
+            {
+                result = false;
+                logger.LogError("Email is malformed - {}", EmailAddress);
+            }
+            return result;
         }
     }
 }
